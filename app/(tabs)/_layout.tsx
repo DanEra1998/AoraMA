@@ -3,6 +3,8 @@ import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 SplashScreen.preventAutoHideAsync();
 
+// NOTICE WITHIN THIS FILE, WE ARE USING ALL THE FONTS WE HAVE WITHIN THE
+// TAILWIND CONFIG FILE
 const RootLayout = () => {
   const [fontsLoaded, error] = useFonts({
     "Poppins-Black": require("../../assets/fonts/Poppins-Black.ttf"),

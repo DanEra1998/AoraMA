@@ -8,7 +8,6 @@ import { StatusBar } from "expo-status-bar";
 import "../global.css";
 
 import "react-native-reanimated";
-import "../global.css";
 
 import { useColorScheme } from "@/hooks/use-color-scheme";
 
