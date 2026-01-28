@@ -1,11 +1,12 @@
 import { useFonts } from "expo-font";
-import { SplashScreen, Stack } from "expo-router";
+import { Tabs } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-SplashScreen.preventAutoHideAsync();
 
-// NOTICE WITHIN THIS FILE, WE ARE USING ALL THE FONTS WE HAVE WITHIN THE
-// TAILWIND CONFIG FILE
-const RootLayout = () => {
+// Keep the splash screen visible while we load resources
+SplashScreen.preventAutoHideAsync().catch(() => {});
+
+export default function TabsLayout() {
   const [fontsLoaded, error] = useFonts({
     "Poppins-Black": require("../../assets/fonts/Poppins-Black.ttf"),
     "Poppins-Bold": require("../../assets/fonts/Poppins-Bold.ttf"),
@@ -22,18 +23,20 @@ const RootLayout = () => {
     if (error) throw error;
 
     if (fontsLoaded) {
-      SplashScreen.hideAsync();
+      SplashScreen.hideAsync().catch(() => {});
     }
   }, [fontsLoaded, error]);
 
-  if (!fontsLoaded && !error) {
-    return null;
-  }
+  if (!fontsLoaded) return null;
 
   return (
-    <Stack>
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-    </Stack>
+    <Tabs screenOptions={{ headerShown: false }}>
+      <Tabs.Screen name="index" options={{ title: "Home" }} />
+      <Tabs.Screen name="search" options={{ title: "Search" }} />
+      <Tabs.Screen name="profile" options={{ title: "Profile" }} />
+
+      {/* This route exists but won’t show as a tab button */}
+      <Tabs.Screen name="saved" options={{ title: "Saved" }} />
+    </Tabs>
   );
-};
-export default RootLayout;
+}

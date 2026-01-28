@@ -1,4 +1,3 @@
-import { Link } from "expo-router";
 import { Text, View } from "react-native";
 
 export default function HomeScreen() {
@@ -7,7 +6,6 @@ export default function HomeScreen() {
       <Text className="text-3xl text-primary font-pextrabold">
         Welcome Daniel!
       </Text>
-      <Link href="../onboarding">onboarding</Link>
     </View>
   );
 }
