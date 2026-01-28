@@ -1,7 +1,10 @@
+import { icons } from "@/constants/icons";
+import { images } from "@/constants/images";
 import { useFonts } from "expo-font";
 import { Tabs } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import { Image, ImageBackground, Text } from "react-native";
 
 // Keep the splash screen visible while we load resources
 SplashScreen.preventAutoHideAsync().catch(() => {});
@@ -31,7 +34,30 @@ export default function TabsLayout() {
 
   return (
     <Tabs screenOptions={{ headerShown: false }}>
-      <Tabs.Screen name="index" options={{ title: "Home" }} />
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: "MEOW",
+
+          tabBarIcon: ({ focused }) => (
+            <>
+              <ImageBackground
+                source={images.highlight}
+                className="flex flex-row w-full flex-1 min-w-[112px] min-h-14 mt-4 justify-center items-center rounded-full overflow-hidden"
+              >
+                <Image
+                  source={icons.home}
+                  tintColor="#151312"
+                  className="size-5"
+                />
+                <Text className="text-secondary text-base font-psemibold ml-2">
+                  meow
+                </Text>
+              </ImageBackground>
+            </>
+          ),
+        }}
+      />
       <Tabs.Screen name="search" options={{ title: "Search" }} />
       <Tabs.Screen name="profile" options={{ title: "Profile" }} />
 
