@@ -1,10 +1,21 @@
 import { icons } from "@/constants/icons";
-import React from "react";
-import { Image, TextInput, View } from "react-native";
+import { Image, TextInput, TouchableOpacity } from "react-native";
 
-const SearchBar = () => {
+// ADDED: Props interface — tells TypeScript what props this component accepts
+interface Props {
+  onPress?: () => void; // function that runs when bar is tapped
+  placeholder?: string; // text shown before user types
+}
+
+// CHANGED: empty () to ({ onPress, placeholder }) — now receives props from parent
+const SearchBar = ({ onPress, placeholder }: Props) => {
   return (
-    <View className="flex-row items-center bg-dark-200 rounded-full px-5 py-4">
+    // CHANGED: View → TouchableOpacity so the whole bar is tappable
+    // ADDED: onPress prop passed down to TouchableOpacity
+    <TouchableOpacity
+      onPress={onPress}
+      className="flex-row items-center bg-dark-200 rounded-full px-5 py-4"
+    >
       <Image
         source={icons.search}
         className="size-5"
@@ -12,14 +23,15 @@ const SearchBar = () => {
         tintColor={"#ab8bff"}
       />
       <TextInput
-        onPress={() => {}}
-        placeholder="Search"
+        // REMOVED: onPress={() => {}} — TextInput doesn't have an onPress, that lives on TouchableOpacity now
+        // CHANGED: hardcoded "Search" → placeholder prop so parent can control this text
+        placeholder={placeholder}
         value=""
         onChangeText={() => {}}
         placeholderTextColor="#a8b5db"
         className="flex-1 ml-2 text-white"
       />
-    </View>
+    </TouchableOpacity>
   );
 };
 
