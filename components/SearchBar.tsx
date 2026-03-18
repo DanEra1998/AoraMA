@@ -5,10 +5,12 @@ import { Image, TextInput, TouchableOpacity } from "react-native";
 interface Props {
   onPress?: () => void; // function that runs when bar is tapped
   placeholder?: string; // text shown before user types
+  value: string;
+  onChangeText: (text: string) => void;
 }
 
 // CHANGED: empty () to ({ onPress, placeholder }) — now receives props from parent
-const SearchBar = ({ onPress, placeholder }: Props) => {
+const SearchBar = ({ onPress, placeholder, value, onChangeText }: Props) => {
   return (
     // CHANGED: View → TouchableOpacity so the whole bar is tappable
     // ADDED: onPress prop passed down to TouchableOpacity
@@ -26,8 +28,8 @@ const SearchBar = ({ onPress, placeholder }: Props) => {
         // REMOVED: onPress={() => {}} — TextInput doesn't have an onPress, that lives on TouchableOpacity now
         // CHANGED: hardcoded "Search" → placeholder prop so parent can control this text
         placeholder={placeholder}
-        value=""
-        onChangeText={() => {}}
+        value={value}
+        onChangeText={onChangeText}
         placeholderTextColor="#a8b5db"
         className="flex-1 ml-2 text-white"
       />

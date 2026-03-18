@@ -57,6 +57,8 @@ export default function HomeScreen() {
             <SearchBar
               onPress={() => router.push("/search")}
               placeholder="Search for a movie"
+              value=""
+              onChangeText={() => {}}
             />
             <>
               <Text className="text-lg font-bold mt-5 mb-3 text-white">
