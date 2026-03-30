@@ -6,7 +6,6 @@ import { Client, ID, Query, TablesDB } from "react-native-appwrite";
 const DATABASE_ID = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID!;
 const COLLECTION_ID = process.env.EXPO_PUBLIC_APPWRITE_COLLECTION_ID!;
 
-// EXPO_PUBLIC_APPWRITE_ENDPOINT=https://sfo.cloud.appwrite.io/v1
 const client = new Client()
   .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT!)
   .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID!);
@@ -21,7 +20,7 @@ export const updateSearchCount = async (query: string, movie: Movie) => {
       queries: [Query.equal("searchTerm", query)],
     });
 
-    console.log(result);
+    // console.log(result);
 
     if (result.rows.length > 0) {
       const existingMovie = result.rows[0];
@@ -49,5 +48,23 @@ export const updateSearchCount = async (query: string, movie: Movie) => {
   } catch (error) {
     console.error(error);
     throw error;
+  }
+};
+
+export const getTrendingMovies = async (): Promise<
+  TrendingMovie[] | undefined
+> => {
+  try {
+    // we will list out the documents and we have done that at the top of updateSearchCount()
+    const result = await tablesDB.listRows({
+      databaseId: DATABASE_ID,
+      tableId: COLLECTION_ID,
+      // we only want to show top 5 movies orded descending by the count
+      queries: [Query.limit(5), Query.orderDesc("count")],
+    });
+    return result.rows as unknown as TrendingMovie[];
+  } catch (error) {
+    console.log(error);
+    return undefined;
   }
 };

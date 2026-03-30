@@ -59,8 +59,6 @@ const Search = () => {
     const timeoutId = setTimeout(async () => {
       if (searchQuery.trim()) {
         await loadMovies();
-        if (movies?.length > 0 && movies?.[0])
-          await updateSearchCount(searchQuery, movies[0]);
       } else {
         reset();
       }
@@ -69,16 +67,23 @@ const Search = () => {
     return () => clearTimeout(timeoutId);
     /* clearTimeout Purpose: 
       Think of it like a countdown. Every time you type a letter:
-
+  
       A 500ms countdown starts
       If you type another letter before it finishes, clearTimeout cancels that countdown
       A fresh 500ms countdown starts
-
+  
       Without clearTimeout, every keystroke would stack up its own timer and they'd all fire eventually 
       defeating the whole point of debouncing.
     */
   }, [searchQuery]);
 
+  // Runs only after movies state has actually updated with fresh data,
+  // preventing the race condition of calling updateSearchCount with stale movies
+  useEffect(() => {
+    if (movies && movies.length > 0 && searchQuery.trim()) {
+      updateSearchCount(searchQuery, movies[0]);
+    }
+  }, [movies]);
   return (
     <View className="flex-1 bg-primary">
       <Image

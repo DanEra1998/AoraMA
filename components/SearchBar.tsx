@@ -4,9 +4,9 @@ import { Image, TextInput, TouchableOpacity } from "react-native";
 // ADDED: Props interface — tells TypeScript what props this component accepts
 interface Props {
   onPress?: () => void; // function that runs when bar is tapped
-  placeholder?: string; // text shown before user types
-  value: string;
-  onChangeText: (text: string) => void;
+  placeholder: string; // text shown before user types
+  value?: string;
+  onChangeText?: (text: string) => void;
 }
 
 // CHANGED: empty () to ({ onPress, placeholder }) — now receives props from parent
