@@ -31,4 +31,27 @@ export const fetchMovies = async ({ query }: { query: string }) => {
   return data.results; // Property 'results' does not exist on type '{ (): Promise<any>; (): Promise<any>; }'
 };
 
+export const fetchMoviesDetails = async (
+  movieId: string
+): Promise<MovieDetails> => {
+  try {
+    // ENDPOINT we want to call for movie details
+    const response = await fetch(
+      `${TMDB_CONFIG.BASE_URL}/movie/${movieId}?api_key=${TMDB_CONFIG.API_KEY}`,
+      {
+        method: "GET",
+        headers: TMDB_CONFIG.headers,
+      }
+    );
+
+    if (!response.ok) throw new Error("Failed to fetch movie detail");
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 // /discover/movie
